@@ -3,13 +3,14 @@ import {
   Button, Card, Col, Form, Row,
 } from 'react-bootstrap';
 import MainLayout from '../layouts/MainLayout';
+import { signIn } from '../apis';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const onClick = () => {
-    console.log('TEST CLICK');
+    signIn(username, password);
   };
 
   return (
