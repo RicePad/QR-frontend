@@ -1,19 +1,29 @@
 /* eslint-disable import/prefer-default-export */
 import { toast } from 'react-toastify';
 
-export function signIn(username: string, password: string) {
-  return fetch('auth/token/login', {
-    method: 'POST',
+interface Props {
+  data: {}
+  token: string
+  method: string
+}
+
+function request(path: string, { data = null, token = null, method = 'GET`' }: Props) {
+  return fetch(path, {
+    method,
     headers: {
+      Authorization: token ? `Token ${token}` : '',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: method !== 'GET' && method !== 'DELETE' ? JSON.stringify(data) : null,
   })
     .then((response) => {
       console.log(response);
 
       // If it is success
       if (response.ok) {
+        if (method === 'DELETE') {
+          return true;
+        }
         return response.json();
       }
       // Otherwise, if there are errors
@@ -36,12 +46,24 @@ export function signIn(username: string, password: string) {
           throw new Error(e);
         });
     })
-    .then((json) => {
-      // Call API successfully
-      toast(JSON.stringify(json), { type: 'success' });
-    })
     .catch((e) => {
       // Handle all errors
       toast(e.message, { type: 'error' });
     });
+}
+
+export function signIn(username: string, password: string) {
+  return request('/auth/token/login/', {
+    data: { username, password },
+    method: 'POST',
+    token: null,
+  });
+}
+
+export function register(username: string, password: string) {
+  return request('/auth/users/', {
+    data: { username, password },
+    method: 'POST',
+    token: null,
+  });
 }
