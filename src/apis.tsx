@@ -2,12 +2,12 @@
 import { toast } from 'react-toastify';
 
 interface Props {
-  data: {}
+  data?: {}
   token: string
-  method: string
+  method?: string
 }
 
-function request(path: string, { data = null, token = null, method = 'GET`' }: Props) {
+function request(path: string, { data = null, token = null, method = 'GET' }: Props) {
   return fetch(path, {
     method,
     headers: {
@@ -17,20 +17,21 @@ function request(path: string, { data = null, token = null, method = 'GET`' }: P
     body: method !== 'GET' && method !== 'DELETE' ? JSON.stringify(data) : null,
   })
     .then((response) => {
-      console.log(response);
-
-      // If it is success
+    // If it is success
       if (response.ok) {
         if (method === 'DELETE') {
+        // If delete, nothing return
           return true;
         }
         return response.json();
       }
+
       // Otherwise, if there are errors
       return response
         .json()
         .then((json) => {
         // Handle JSON error, response by the server
+
           if (response.status === 400) {
             const errors = Object.keys(json).map(
               (k) => `${(json[k].join(' '))}`,
@@ -47,11 +48,10 @@ function request(path: string, { data = null, token = null, method = 'GET`' }: P
         });
     })
     .catch((e) => {
-      // Handle all errors
+    // Handle all errors
       toast(e.message, { type: 'error' });
     });
 }
-
 export function signIn(username: string, password: string) {
   return request('/auth/token/login/', {
     data: { username, password },
@@ -66,4 +66,30 @@ export function register(username: string, password: string) {
     method: 'POST',
     token: null,
   });
+}
+
+export function fetchPlaces(token: string) {
+  console.log('token', token);
+  return request('/api/places/', {
+    token,
+  });
+}
+
+export function addPlace(data: {}, token: string) {
+  return request('/api/places/', {
+    data,
+    token,
+    method: 'POST',
+  });
+}
+
+export function uploadImage(image: string) {
+  const formData = new FormData();
+  formData.append('file', image);
+  formData.append('upload_preset', 'qrmenu_photos');
+
+  return fetch('https://api.cloudinary.com/v1_1/jona-qr-cloudinare/image/upload', {
+    method: 'POST',
+    body: formData,
+  }).then((response) => response.json());
 }
