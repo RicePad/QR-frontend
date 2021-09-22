@@ -17,16 +17,18 @@ interface MenuItemProps {
 
 }
 
-const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone, item }) => {
+const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone, item = {} }) => {
   const [categoryName, setCategoryName] = useState('');
   const [categoryFormShow, setCategoryFormShow] = useState(false);
 
-  const [category, setCategory] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
-  const [price, setPrice] = useState(0);
-  const [isAvailable, setIsAvailable] = useState(false);
+  const [category, setCategory] = useState(item.category);
+  const [name, setName] = useState(item.name);
+  const [description, setDescription] = useState(item.description);
+  const [image, setImage] = useState(item.image);
+  const [price, setPrice] = useState(item.price || 0);
+  const [isAvailable, setIsAvailable] = useState(
+    item.is_available === undefined ? true : !!item.is_available,
+  );
 
   const target = useRef(null);
   const auth = useContext(AuthContext);
