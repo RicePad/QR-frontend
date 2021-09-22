@@ -75,6 +75,10 @@ export function fetchPlaces(token: string) {
   });
 }
 
+export function fetchPlace(id: number, token: string) {
+  return request(`/api/places/${id}`, { token });
+}
+
 export function addPlace(data: {}, token: string) {
   return request('/api/places/', {
     data,
@@ -92,4 +96,11 @@ export function uploadImage(image: string) {
     method: 'POST',
     body: formData,
   }).then((response) => response.json());
+}
+
+export function addMenuItems(data: {}, token: string) {
+  return request('/api/menu_items/', { data, token, method: 'POST' });
+}
+export function addCategory(data: {}, token: string) {
+  return request('/api/categories/', { data, token, method: 'POST' });
 }
