@@ -13,9 +13,11 @@ import ImageDropZone from './ImageDropZone';
 interface MenuItemProps {
     place: any
     onDone: () => void
+    item: any
+
 }
 
-const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone }) => {
+const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone, item }) => {
   const [categoryName, setCategoryName] = useState('');
   const [categoryFormShow, setCategoryFormShow] = useState(false);
 
@@ -45,6 +47,7 @@ const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone }) => {
   const onAddMenuItems = async () => {
     const json = await addMenuItems({
       place: place.id,
+      category,
       name,
       description,
       image,
@@ -129,7 +132,9 @@ const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone }) => {
           type="number"
           placeholder="Enter Price"
           value={price}
-          onChange={(e: any) => setPrice(e.target.value)}
+          onChange={
+              (e) => setPrice(parseInt(e.target.value, 10))
+            }
         />
       </Form.Group>
       <Form.Group>
@@ -158,7 +163,7 @@ const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone }) => {
         block
         onClick={onAddMenuItems}
       >
-        Add Menu Item
+        { item.id ? 'Update Menu Item' : '+ Add Menu Item' }
       </Button>
     </>
   );

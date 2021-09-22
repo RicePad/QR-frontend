@@ -4,28 +4,29 @@ import styled from 'styled-components';
 import { IoMdArrowBack } from 'react-icons/io';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {
-  Row, Col, Button,
+  Row, Col, Button, Modal,
 } from 'react-bootstrap';
 import { fetchPlace } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
+import MenuItem from '../components/MenuItem';
 
 interface PlaceProps {
-    [key: string]: string
+    [key: string]: string | any
 }
 
 const Panel = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 1px 1px 10px rgba(0,0,0,0.05);
+  box-shadow: 1px 1px 10px rxwgba(0,0,0,0.05);
 `;
 
 const Page: React.FC = () => {
   const [place, setPlace] = useState<PlaceProps>({});
-  //   const [menuItemForShow, setMenuItemForShow] = useState(false);
-  //   const [selectedItem, setSelectedItem] = useState(null);
+  const [menuItemFormShow, setMenuItemForShow] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
     interface ParamTypes {
       id: any
@@ -35,13 +36,13 @@ const Page: React.FC = () => {
     const params = useParams<ParamTypes>();
     const history = useHistory();
 
-    // const hideModal = () => {
-    //   setMenuItemForShow(false);
-    // };
+    const hideModal = () => {
+      setMenuItemForShow(false);
+    };
 
-    // const showModal = () => {
-    //   setMenuItemForShow(true);
-    // };
+    const showModal = () => {
+      setMenuItemForShow(true);
+    };
 
     const onBack = () => {
       history.push('/places');
@@ -80,10 +81,45 @@ const Page: React.FC = () => {
 
           <Col md={4}>
             <Panel>
-              <MenuItemForm place={place} onDone={onFetchPlace} />
+              <MenuItemForm place={place} onDone={onFetchPlace} item="" />
             </Panel>
           </Col>
+
+          <Col md={8}>
+            {place?.categories?.map((category: any) => (
+              <div key={category.id} className="mb-5">
+                <div className="d-flex align-items-center mb-4">
+                  <h4 className="mb-0 mr-2">
+                    <b>{category.name}</b>
+                  </h4>
+                </div>
+                {category.menu_items.map((item: any) => (
+                  <MenuItem
+                    key={item.id}
+                    item={item}
+                    onEdit={() => {
+                      setSelectedItem(item);
+                      showModal();
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+          </Col>
         </Row>
+        <Modal show={menuItemFormShow} onHide={hideModal} centered>
+          <Modal.Body>
+            <h4 className="text-center">Menu Item</h4>
+            <MenuItemForm
+              place={place}
+              onDone={() => {
+                onFetchPlace();
+                hideModal();
+              }}
+              item={selectedItem}
+            />
+          </Modal.Body>
+        </Modal>
       </MainLayout>
     );
 };
