@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Modal, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import { fetchPlaces } from '../apis';
 import AuthContext from '../contexts/AuthContext';
@@ -44,6 +45,7 @@ const Places: React.FC = () => {
   const [show, setShow] = useState(false);
 
   const auth = useContext(AuthContext);
+  const history = useHistory();
 
   const onHide = () => {
     setShow(false);
@@ -80,7 +82,7 @@ const Places: React.FC = () => {
       <Row>
         {places.map((place) => (
           <Col key={place.id} lg={4}>
-            <Place>
+            <Place onClick={() => history.push(`/places/${place.id}`)}>
               <div style={{ backgroundImage: `url(${place.image})` }} />
               <p>{place.name}</p>
             </Place>
