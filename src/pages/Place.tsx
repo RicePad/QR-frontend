@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoMdArrowBack } from 'react-icons/io';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai';
 import {
   Row, Col, Button, Modal,
 } from 'react-bootstrap';
@@ -11,6 +11,7 @@ import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
 import MenuItem from '../components/MenuItem';
+import QRCodeModal from '../components/QRCodeModal';
 
 interface PlaceProps {
     [key: string]: string | any
@@ -27,6 +28,7 @@ const Page: React.FC = () => {
   const [place, setPlace] = useState<PlaceProps>({});
   const [menuItemFormShow, setMenuItemForShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [qrCode, setQrCode] = useState(false);
 
     interface ParamTypes {
       id: any
@@ -42,6 +44,14 @@ const Page: React.FC = () => {
 
     const showModal = () => {
       setMenuItemForShow(true);
+    };
+
+    const hideQRModal = () => {
+      setQrCode(false);
+    };
+
+    const showQRModal = () => {
+      setQrCode(true);
     };
 
     const onBack = () => {
@@ -74,6 +84,9 @@ const Page: React.FC = () => {
 
                 <Button variant="link">
                   <AiOutlineDelete size={25} color="red" />
+                </Button>
+                <Button variant="link" onClick={showQRModal}>
+                  <AiOutlineQrcode size={25} />
                 </Button>
               </div>
             </div>
@@ -120,6 +133,12 @@ const Page: React.FC = () => {
             />
           </Modal.Body>
         </Modal>
+
+        <QRCodeModal
+          place={place}
+          show={qrCode}
+          hide={hideQRModal}
+        />
       </MainLayout>
     );
 };
