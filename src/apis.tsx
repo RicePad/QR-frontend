@@ -87,6 +87,14 @@ export function addPlace(data: {}, token: string) {
   });
 }
 
+export function updatePlace(id: number, data: {}, token: string) {
+  return request(`/api/places/${id}`, {
+    data,
+    token,
+    method: 'PATCH',
+  });
+}
+
 export function uploadImage(image: string) {
   const formData = new FormData();
   formData.append('file', image);
