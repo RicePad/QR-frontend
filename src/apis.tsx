@@ -88,10 +88,10 @@ export function addPlace(data: {}, token: string) {
 }
 
 export function updatePlace(id: number, data: {}, token: string) {
-  return request(`api/places/${id}`, {
+  return request(`/api/places/${id}`, {
     data,
     token,
-    method: 'PATCH'
+    method: 'PATCH',
   });
 }
 
