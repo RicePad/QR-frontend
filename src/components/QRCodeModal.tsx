@@ -1,16 +1,28 @@
 import React from 'react';
 import {
-  Modal, Container, Row, Col,
+  Modal, Container, Row, Col, Button,
 } from 'react-bootstrap';
 import QRCodeReact from 'qrcode.react';
+import styled from 'styled-components';
+
+const OperationButton = styled(Button)`
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  font-size: 20px;
+  line-height: 18px;
+`;
 
 interface QRCodeModalProps {
     place: any
     show: any
     hide: any
+    onUpdatePlace: any
 }
 
-const QRCodeModal: React.FC<QRCodeModalProps> = ({ place, show, hide }) => (
+const QRCodeModal: React.FC<QRCodeModalProps> = ({
+  place, show, hide, onUpdatePlace,
+}) => (
   <Modal show={show} hide={hide} size="lg" centered>
     <Modal.Body>
       <Container>
@@ -21,6 +33,21 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ place, show, hide }) => (
             {' '}
             <b>{place.number_of_tables}</b>
           </h5>
+
+          <OperationButton
+            variant="lightgray"
+            size="sm"
+            onClick={() => onUpdatePlace(place.number_of_tables - 1)}
+          >
+            -
+          </OperationButton>
+          <OperationButton
+            variant="lightgray"
+            size="sm"
+            onClick={() => onUpdatePlace(place.number_of_tables + 1)}
+          >
+            +
+          </OperationButton>
         </div>
 
         <Row>

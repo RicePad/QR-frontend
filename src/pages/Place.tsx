@@ -6,7 +6,7 @@ import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai';
 import {
   Row, Col, Button, Modal,
 } from 'react-bootstrap';
-import { fetchPlace } from '../apis';
+import { fetchPlace, updatePlace } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
@@ -64,6 +64,16 @@ const Page: React.FC = () => {
         setPlace(json);
         console.log('json: ', json);
       }
+    };
+
+    const onUpdatePlace = (tables: number) => {
+      updatePlace(place.id, { number_of_tables: tables }, auth.token).then(
+        (json) => {
+          if (json) {
+            setPlace(json);
+          }
+        },
+      );
     };
 
     useEffect(() => {
@@ -138,6 +148,7 @@ const Page: React.FC = () => {
           place={place}
           show={qrCode}
           hide={hideQRModal}
+          onUpdatePlace={onUpdatePlace}
         />
       </MainLayout>
     );
