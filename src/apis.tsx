@@ -75,7 +75,7 @@ export function fetchPlaces(token: string) {
   });
 }
 
-export function fetchPlace(id: number, token: string) {
+export function fetchPlace(id: string, token?: string) {
   return request(`/api/places/${id}`, { token });
 }
 
