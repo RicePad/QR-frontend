@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import Places from '../pages/Places';
 import Place from '../pages/Place';
 import Register from '../pages/Register';
+import Menu from '../pages/Menu';
 import { AuthProvider } from '../contexts/AuthContext';
 import PrivateRoute from './PrivateRoute';
 
@@ -21,6 +22,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/menu/:id/:table">
+          <Menu />
         </Route>
         <PrivateRoute exact path="/places/:id">
           <Place />

@@ -1,11 +1,15 @@
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import React, { useState, useEffect, useContext } from 'react';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
+import { IoCloseOutline } from 'react-icons/io5';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { fetchPlace } from '../apis';
+import MenuList from '../components/MenuList';
 
 interface MenuProps {
-    id: number
+    id?: number
 }
 
 const OrderButton = styled(Button)`
@@ -19,35 +23,38 @@ const OrderButton = styled(Button)`
     `;
 
 const Menu: React.FC<MenuProps> = () => {
-    const [place, setPlace] = useState({}) 
-   
+  const [place, setPlace] = useState({});
+
     interface ParamTypes {
         id: string
     }
-    
-    const params = useParams<ParamTypes>()
-    
+
+    const params = useParams<ParamTypes>();
+
     const onFetchPlace = async () => {
-        const json = await fetchPlace(params.id)
-        console.log('jsonMenu: ', json)
-        if(json){
-            setPlace(json)
-        }
+      const json = await fetchPlace(params.id);
+      console.log('jsonMenu: ', json);
+      if (json) {
+        setPlace(json);
+      }
+    };
 
     useEffect(() => {
-        onFetchPlace
-    }, [])
+      onFetchPlace();
+    }, []);
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <MenuList place={place} />
+          </Col>
+        </Row>
 
-    }    
-        return(
-       <Container>
-           <Row>
-               <Col>
-                {/* Add MenuList Component */}
-               </Col>
-           </Row>
-       </Container>
-    )
-}
+        <OrderButton>
+          <IoCloseOutline size={25} />
+        </OrderButton>
+      </Container>
+    );
+};
 
-export default Menu
+export default Menu;

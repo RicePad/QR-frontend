@@ -88,11 +88,7 @@ export function addPlace(data: {}, token: string) {
 }
 
 export function updatePlace(id: number, data: {}, token: string) {
-  return request(`/api/places/${id}`, {
-    data,
-    token,
-    method: 'PATCH',
-  });
+  return request(`/api/places/${id}`, { data, token, method: 'PATCH' });
 }
 
 export function uploadImage(image: string) {
@@ -109,6 +105,11 @@ export function uploadImage(image: string) {
 export function addMenuItems(data: {}, token: string) {
   return request('/api/menu_items/', { data, token, method: 'POST' });
 }
+
+export function updateMenuItem(id: number, data: {}, token: string) {
+  return request(`/api/menu_items/${id}`, { data, token, method: 'PATCH' });
+}
+
 export function addCategory(data: {}, token: string) {
   return request('/api/categories/', { data, token, method: 'POST' });
 }

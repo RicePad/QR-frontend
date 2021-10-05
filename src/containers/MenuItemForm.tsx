@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { RiPlayListAddFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
-import { addCategory, addMenuItems } from '../apis';
+import { addCategory, addMenuItems, updateMenuItem } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import ImageDropZone from './ImageDropZone';
 
@@ -65,6 +65,34 @@ const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone, item = {} }) => 
       setImage('');
       setPrice(0);
       setIsAvailable(true);
+      onDone();
+    }
+  };
+  const onUpdateMenuItem = async () => {
+    const json = await updateMenuItem(
+      item.id,
+      {
+        place: place.id,
+        category,
+        name,
+        price,
+        description,
+        image,
+        is_available: isAvailable,
+      },
+      auth.token,
+    );
+
+    if (json) {
+      console.log(json);
+
+      toast(`Menu Item ${json.name} was updated`, { type: 'success' });
+      setCategory('');
+      setName('');
+      setPrice(0);
+      setDescription('');
+      setImage('');
+      setIsAvailable(false);
       onDone();
     }
   };
@@ -163,7 +191,7 @@ const MenuItemForm: React.FC<MenuItemProps> = ({ place, onDone, item = {} }) => 
       <Button
         variant="standard"
         block
-        onClick={onAddMenuItems}
+        onClick={item.id ? onUpdateMenuItem : onAddMenuItems}
       >
         { item.id ? 'Update Menu Item' : '+ Add Menu Item' }
       </Button>
