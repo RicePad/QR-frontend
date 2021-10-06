@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { fetchPlace } from '../apis';
 import MenuList from '../components/MenuList';
+import ShoppingCart from '../components/ShoppingCart';
 
 interface MenuProps {
     id?: number
@@ -50,6 +51,19 @@ const Menu: React.FC<MenuProps> = () => {
         },
       });
     };
+    const onRemoveItemToShoppingCart = (item: { id: string | number; }) => {
+      if (totalQuantity === 1) {
+        setShowShoppingCart(false);
+      }
+
+      setShoppingCart({
+        ...shoppingCart,
+        [item.id]: {
+          ...item,
+          quantity: (shoppingCart[item.id]?.quantity || 0) - 1,
+        },
+      });
+    };
 
     const totalQuantity = useMemo(() => Object.keys(shoppingCart)
       .map((i) => shoppingCart[i].quantity)
@@ -60,14 +74,25 @@ const Menu: React.FC<MenuProps> = () => {
       onFetchPlace();
     }, []);
     return (
-      <Container>
-        <Row>
-          <Col>
-            <MenuList
-              place={place}
-              shoppingCart={shoppingCart}
-              onOrder={onAddItemtoShoppingCart}
-            />
+      <Container className="mt-5 mb-5">
+        <Row className="justify-content-center">
+          <Col lg={8}>
+            {showShoppingCart ? (
+              <ShoppingCart
+                items={Object.keys(shoppingCart)
+                  .map((key) => shoppingCart[key])
+                  .filter((item) => item.quantity > 0)}
+                onAdd={onAddItemtoShoppingCart}
+                onRemove={onRemoveItemToShoppingCart}
+              />
+            ) : (
+              <MenuList
+                place={place}
+                shoppingCart={shoppingCart}
+                onOrder={onAddItemtoShoppingCart}
+              />
+            )}
+
           </Col>
         </Row>
 
