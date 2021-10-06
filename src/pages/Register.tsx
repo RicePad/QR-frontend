@@ -1,17 +1,15 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-unused-vars */
-
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Button, Card, Col, Form, Row, Spinner,
 } from 'react-bootstrap';
 import MainLayout from '../layouts/MainLayout';
-import { signIn } from '../apis';
+import { register } from '../apis';
 
 import AuthContext from '../contexts/AuthContext';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,7 +23,7 @@ const Login: React.FC = () => {
   });
 
   const onClick = () => {
-    auth.signIn(username, password, () => history.replace('/places'));
+    auth.register(username, password, () => history.replace('/places'));
   };
 
   return (
@@ -35,7 +33,7 @@ const Login: React.FC = () => {
           <Card>
             <Card.Body>
               <h3 className="text-center">
-                <b>LOGIN</b>
+                <b>REGISTER</b>
               </h3>
 
               <Form.Group>
@@ -68,7 +66,7 @@ const Login: React.FC = () => {
                     aria-hidden="true"
                   />
                 ) : (
-                  'Sign In'
+                  'Register'
                 )}
               </Button>
 
@@ -80,4 +78,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
