@@ -66,7 +66,7 @@ const Page: React.FC = () => {
       }
     };
 
-    const onUpdatePlace = (tables: number) => {
+    const onUpdatePlace = (tables: any) => {
       updatePlace(place.id, { number_of_tables: tables }, auth.token).then(
         (json) => {
           if (json) {
@@ -75,7 +75,6 @@ const Page: React.FC = () => {
         },
       );
     };
-
     useEffect(() => {
       onFetchPlace();
     }, []);
@@ -124,6 +123,7 @@ const Page: React.FC = () => {
                       setSelectedItem(item);
                       showModal();
                     }}
+                    onOrder=""
                   />
                 ))}
               </div>

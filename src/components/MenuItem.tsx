@@ -24,9 +24,10 @@ const Container = styled.div`
 interface MenuItemProps {
     item: any
     onEdit: any
+    onOrder: any
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit }) => (
+const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit, onOrder }) => (
   <Container>
     <Col xs={5} style={{ backgroundImage: `url(${item.image})` }} />
     <Col xs={7} className="d-flex flex-column justify-content-between w-100">
@@ -47,6 +48,25 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit }) => (
         <p className="mb-4">{item.description}</p>
       </div>
       <div className="d-flex justify-content-between align-items-end">
+        <div>
+          <h5 className="mb-0 text-standard">
+            <b>
+              $
+              {item.price}
+            </b>
+          </h5>
+
+          {onOrder ? (
+            <Button
+              variant="standard"
+              className="mt-2"
+              size="sm"
+              onClick={() => onOrder(item)}
+            >
+              {!item.quantity ? 'Add to shopping cart' : `Add one more (${item.quantity})`}
+            </Button>
+          ) : null}
+        </div>
         {!item.is_available ? (<small className="text-secondary">Not Available</small>) : null}
       </div>
     </Col>
