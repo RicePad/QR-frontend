@@ -123,6 +123,7 @@ const Page: React.FC = () => {
                       setSelectedItem(item);
                       showModal();
                     }}
+                    onOrder=""
                   />
                 ))}
               </div>

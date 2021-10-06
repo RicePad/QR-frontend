@@ -2,7 +2,7 @@ import {
   Container, Row, Col, Button,
 } from 'react-bootstrap';
 import { IoCloseOutline } from 'react-icons/io5';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { fetchPlace } from '../apis';
@@ -24,6 +24,8 @@ const OrderButton = styled(Button)`
 
 const Menu: React.FC<MenuProps> = () => {
   const [place, setPlace] = useState({});
+  const [shoppingCart, setShoppingCart] = useState<any>({});
+  const [showShoppingCart, setShowShoppingCart] = useState(false);
 
     interface ParamTypes {
         id: string
@@ -39,6 +41,21 @@ const Menu: React.FC<MenuProps> = () => {
       }
     };
 
+    const onAddItemtoShoppingCart = (item: { id: string | number; }) => {
+      setShoppingCart({
+        ...shoppingCart,
+        [item.id]: {
+          ...item,
+          quantity: (shoppingCart[item.id]?.quantity || 0) + 1,
+        },
+      });
+    };
+
+    const totalQuantity = useMemo(() => Object.keys(shoppingCart)
+      .map((i) => shoppingCart[i].quantity)
+      .reduce((a, b) => a + b, 0),
+    [shoppingCart]);
+
     useEffect(() => {
       onFetchPlace();
     }, []);
@@ -46,13 +63,22 @@ const Menu: React.FC<MenuProps> = () => {
       <Container>
         <Row>
           <Col>
-            <MenuList place={place} />
+            <MenuList
+              place={place}
+              shoppingCart={shoppingCart}
+              onOrder={onAddItemtoShoppingCart}
+            />
           </Col>
         </Row>
 
-        <OrderButton>
-          <IoCloseOutline size={25} />
-        </OrderButton>
+        {totalQuantity ? (
+          <OrderButton
+            variant="standard"
+            onClick={() => setShowShoppingCart(!showShoppingCart)}
+          >
+            {showShoppingCart ? <IoCloseOutline size={25} /> : totalQuantity}
+          </OrderButton>
+        ) : null}
       </Container>
     );
 };

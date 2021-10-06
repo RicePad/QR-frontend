@@ -4,6 +4,8 @@ import MenuItem from './MenuItem';
 
 interface MenuListProps {
     place: any
+    shoppingCart: any
+    onOrder: any
 }
 
 const Place = styled.div`
@@ -18,7 +20,7 @@ const Container = styled.div`
 
 `;
 
-const MenuList: React.FC<MenuListProps> = ({ place }) => (
+const MenuList: React.FC<MenuListProps> = ({ place, shoppingCart, onOrder }) => (
   <Container>
     <Place>
       <img src={place.image} width={100} height={100} alt="place" />
@@ -39,7 +41,11 @@ const MenuList: React.FC<MenuListProps> = ({ place }) => (
               <MenuItem
                 key={item.id}
                 onEdit=""
-                item={{ ...item }}
+                item={{
+                  ...item,
+                  quantity: shoppingCart[item.id]?.quantity,
+                }}
+                onOrder={onOrder}
               />
             ))}
         </div>
