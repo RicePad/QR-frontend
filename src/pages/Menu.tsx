@@ -70,6 +70,11 @@ const Menu: React.FC<MenuProps> = () => {
       .reduce((a, b) => a + b, 0),
     [shoppingCart]);
 
+    const onPaymentDone = () => {
+      setShoppingCart({});
+      setShowShoppingCart(false);
+    };
+
     useEffect(() => {
       onFetchPlace();
     }, []);
@@ -84,6 +89,7 @@ const Menu: React.FC<MenuProps> = () => {
                   .filter((item) => item.quantity > 0)}
                 onAdd={onAddItemtoShoppingCart}
                 onRemove={onRemoveItemToShoppingCart}
+                onPaymentDone={onPaymentDone}
               />
             ) : (
               <MenuList
