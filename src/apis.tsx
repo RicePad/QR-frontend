@@ -91,6 +91,14 @@ export function updatePlace(id: number, data: {}, token: string) {
   return request(`/api/places/${id}`, { data, token, method: 'PATCH' });
 }
 
+export function createPaymentIntent(data: {}, token: string) {
+  return request('/api/create_payment_intent/', {
+    data,
+    token,
+    method: 'POST',
+  });
+}
+
 export function uploadImage(image: string) {
   const formData = new FormData();
   formData.append('file', image);
