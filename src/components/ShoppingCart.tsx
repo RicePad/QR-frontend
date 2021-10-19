@@ -2,14 +2,18 @@ import React, { useMemo } from 'react';
 import { Card } from 'react-bootstrap';
 
 import OperationButton from './OperationButton';
+import PaymentForm from '../containers/PaymentForm';
 
 interface ShoppingCartProps {
     items: any
     onAdd: any
     onRemove: any
+    onPaymentDone: any
 }
 
-const ShoppingCart: React.FC<ShoppingCartProps> = ({ items, onAdd, onRemove }) => {
+const ShoppingCart: React.FC<ShoppingCartProps> = ({
+  items, onAdd, onRemove, onPaymentDone,
+}) => {
   const totalPrice = useMemo(
     () => items.map((i: any) => i.quantity * i.price).reduce((a: any, b: any) => a + b, 0),
     [items],
@@ -66,6 +70,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ items, onAdd, onRemove }) =
           </div>
 
           <hr className="mb-4" />
+          <PaymentForm amount={totalPrice} items={items} onDone={onPaymentDone} />
         </Card.Body>
       </Card>
     </>
