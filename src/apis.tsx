@@ -121,3 +121,6 @@ export function updateMenuItem(id: number, data: {}, token: string) {
 export function addCategory(data: {}, token: string) {
   return request('/api/categories/', { data, token, method: 'POST' });
 }
+export function fetchOrders(placeId: number, token: string) {
+  return request(`/api/orders/?place=${placeId}`, { token });
+}
