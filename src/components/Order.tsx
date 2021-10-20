@@ -5,7 +5,7 @@ interface OrderProps {
     order: any
 }
 
-const Order:React.FC<OrderProps> = ({ order }) => (
+const Order: React.FC<OrderProps> = ({ order }) => (
   <Card className="mb-3">
     <Card.Header className="d-flex justify-content-between">
       <span>{`Order #${order.id} - Table #${order.table}`}</span>
@@ -29,16 +29,18 @@ const Order:React.FC<OrderProps> = ({ order }) => (
               width={30}
               height={30}
               style={{ borderRadius: 3, margin: '0 10px' }}
-              alt="preview of order"
+              alt="preview order"
             />
             <span>{item.name}</span>
           </div>
         ))}
       </div>
-      <Button variant="standard" size="lg">
-        Done
-      </Button>
-      <div />
+
+      <div>
+        <Button variant="standard" size="lg">
+          Done
+        </Button>
+      </div>
     </Card.Body>
   </Card>
 );

@@ -8,16 +8,13 @@ import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import Order from '../components/Order';
 
-const Orders:React.FC = () => {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
-
   const params = useParams<any>();
   const history = useHistory();
   const auth = useContext(AuthContext);
 
-  const onBack = () => {
-    history.push(`/places/${params.id}`);
-  };
+  const onBack = () => history.push(`/places/${params.id}`);
 
   const onFetchOrders = async () => {
     const json = await fetchOrders(params.id, auth.token);
@@ -54,7 +51,6 @@ const Orders:React.FC = () => {
           ))}
       </Row>
     </MainLayout>
-
   );
 };
 

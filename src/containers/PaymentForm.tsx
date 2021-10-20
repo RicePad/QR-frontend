@@ -23,7 +23,7 @@ interface PaymentFormProps {
     onDone: any
 }
 
-const PaymentForm:React.FC<PaymentFormProps> = ({ amount, items, onDone }) => {
+const PaymentForm: React.FC<PaymentFormProps> = ({ amount, items, onDone }) => {
   const [loading, setLoading] = useState(false);
 
   const stripe = useStripe();
@@ -34,7 +34,6 @@ const PaymentForm:React.FC<PaymentFormProps> = ({ amount, items, onDone }) => {
 
   const onSubmit = async (event: any) => {
     event.preventDefault();
-
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
@@ -71,11 +70,11 @@ const PaymentForm:React.FC<PaymentFormProps> = ({ amount, items, onDone }) => {
   );
 };
 
-const stripePromise = loadStripe('process.env.STRIPE_PUBLIC_API_KEY');
-const stripeContext = (props: any) => (
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_API_KEY);
+const StripeContext = (props: any) => (
   <Elements stripe={stripePromise}>
     <PaymentForm {...props} />
   </Elements>
 );
 
-export default stripeContext;
+export default StripeContext;
