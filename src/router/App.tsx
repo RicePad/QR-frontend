@@ -7,6 +7,7 @@ import Places from '../pages/Places';
 import Place from '../pages/Place';
 import Register from '../pages/Register';
 import Menu from '../pages/Menu';
+import Orders from '../pages/Orders';
 import { AuthProvider } from '../contexts/AuthContext';
 import PrivateRoute from './PrivateRoute';
 
@@ -31,6 +32,9 @@ const App: React.FC = () => (
         </PrivateRoute>
         <PrivateRoute exact path="/places">
           <Places />
+        </PrivateRoute>
+        <PrivateRoute exact path="/places/:id/orders">
+          <Orders />
         </PrivateRoute>
       </Switch>
     </BrowserRouter>

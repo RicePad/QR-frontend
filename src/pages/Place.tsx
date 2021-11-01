@@ -3,6 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoMdArrowBack } from 'react-icons/io';
 import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai';
+import { RiFileList3Line } from 'react-icons/ri';
+
 import {
   Row, Col, Button, Modal,
 } from 'react-bootstrap';
@@ -97,6 +99,9 @@ const Page: React.FC = () => {
                 <Button variant="link" onClick={showQRModal}>
                   <AiOutlineQrcode size={25} />
                 </Button>
+                <Button variant="link" href={`/places/${params.id}/orders`}>
+                  <RiFileList3Line size={25} />
+                </Button>
               </div>
             </div>
           </Col>
@@ -150,6 +155,7 @@ const Page: React.FC = () => {
           hide={hideQRModal}
           onUpdatePlace={onUpdatePlace}
         />
+
       </MainLayout>
     );
 };
