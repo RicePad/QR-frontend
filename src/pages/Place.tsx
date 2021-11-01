@@ -14,7 +14,6 @@ import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
 import MenuItem from '../components/MenuItem';
 import QRCodeModal from '../components/QRCodeModal';
-import Orders from './Orders';
 
 interface PlaceProps {
     [key: string]: string | any
@@ -156,7 +155,6 @@ const Page: React.FC = () => {
           hide={hideQRModal}
           onUpdatePlace={onUpdatePlace}
         />
-        <Orders />
 
       </MainLayout>
     );
