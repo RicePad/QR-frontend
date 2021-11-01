@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router';
 
 import React, { useState, useContext, useEffect } from 'react';
-import { fetchOrders } from '../apis';
+import { fetchOrders, completeOrder } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import Order from '../components/Order';
@@ -21,6 +21,13 @@ const Orders = () => {
     if (json) {
       console.log(json);
       setOrders(json);
+    }
+  };
+
+  const onCompleteOrder = async (orderId: any) => {
+    const json = await completeOrder(orderId, { status: 'completed' }, auth.token);
+    if (json) {
+      onFetchOrders();
     }
   };
 
@@ -46,7 +53,7 @@ const Orders = () => {
           ?.filter((order) => order.status === 'processing')
           ?.map((order) => (
             <Col key={order.id} lg={8}>
-              <Order order={order} />
+              <Order order={order} onComplete={() => onCompleteOrder(order.id)} />
             </Col>
           ))}
       </Row>

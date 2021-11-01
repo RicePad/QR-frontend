@@ -3,9 +3,10 @@ import { Card, Button } from 'react-bootstrap';
 
 interface OrderProps {
     order: any
+    onComplete: any
 }
 
-const Order: React.FC<OrderProps> = ({ order }) => (
+const Order: React.FC<OrderProps> = ({ order, onComplete }) => (
   <Card className="mb-3">
     <Card.Header className="d-flex justify-content-between">
       <span>{`Order #${order.id} - Table #${order.table}`}</span>
@@ -37,9 +38,11 @@ const Order: React.FC<OrderProps> = ({ order }) => (
       </div>
 
       <div>
-        <Button variant="standard" size="lg">
-          Done
-        </Button>
+        { onComplete ? (
+          <Button variant="standard" size="lg" onClick={onComplete}>
+            Done
+          </Button>
+        ) : null }
       </div>
     </Card.Body>
   </Card>

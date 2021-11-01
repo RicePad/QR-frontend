@@ -120,3 +120,7 @@ export function addCategory(data: {}, token: string) {
 export function fetchOrders(placeId: any, token: string) {
   return request(`/api/orders/?place=${placeId}`, { token });
 }
+
+export function completeOrder(id: number, data: {}, token: string) {
+  return request(`/api/orders/${id}`, { data, token, method: 'PATCH' });
+}
