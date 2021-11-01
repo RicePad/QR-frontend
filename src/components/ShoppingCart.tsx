@@ -9,10 +9,11 @@ interface ShoppingCartProps {
     onAdd: any
     onRemove: any
     onPaymentDone: any
+    color: any
 }
 
 const ShoppingCart: React.FC<ShoppingCartProps> = ({
-  items, onAdd, onRemove, onPaymentDone,
+  items, onAdd, onRemove, onPaymentDone, color,
 }) => {
   const totalPrice = useMemo(
     () => items.map((i: any) => i.quantity * i.price).reduce((a: any, b: any) => a + b, 0),
@@ -70,7 +71,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
           </div>
 
           <hr className="mb-4" />
-          <PaymentForm amount={totalPrice} items={items} onDone={onPaymentDone} />
+          <PaymentForm amount={totalPrice} items={items} onDone={onPaymentDone} color={color} />
         </Card.Body>
       </Card>
     </>

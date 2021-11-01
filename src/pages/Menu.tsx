@@ -24,7 +24,7 @@ const OrderButton = styled(Button)`
     `;
 
 const Menu: React.FC<MenuProps> = () => {
-  const [place, setPlace] = useState({});
+  const [place, setPlace] = useState<any>({});
   const [shoppingCart, setShoppingCart] = useState<any>({});
   const [showShoppingCart, setShowShoppingCart] = useState(false);
 
@@ -90,12 +90,15 @@ const Menu: React.FC<MenuProps> = () => {
                 onAdd={onAddItemtoShoppingCart}
                 onRemove={onRemoveItemToShoppingCart}
                 onPaymentDone={onPaymentDone}
+                color={place.color}
               />
             ) : (
               <MenuList
                 place={place}
                 shoppingCart={shoppingCart}
                 onOrder={onAddItemtoShoppingCart}
+                color={place.color}
+                font={place.font}
               />
             )}
 

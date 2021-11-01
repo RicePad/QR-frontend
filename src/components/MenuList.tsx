@@ -6,6 +6,12 @@ interface MenuListProps {
     place: any
     shoppingCart: any
     onOrder: any
+    color: any
+    font: any
+}
+
+interface StyleProps {
+  font?: any;
 }
 
 const Place = styled.div`
@@ -15,13 +21,16 @@ const Place = styled.div`
     margin-bottom: 20px;
   }
 `;
-
-const Container = styled.div`
-
+const Container = styled.div<StyleProps>`
+  b, p {
+    ${({ font }): any => font && `font-family: ${font};`}
+  }
 `;
 
-const MenuList: React.FC<MenuListProps> = ({ place, shoppingCart, onOrder }) => (
-  <Container>
+const MenuList: React.FC<MenuListProps> = ({
+  place, shoppingCart, onOrder, color = '', font = '',
+}) => (
+  <Container font={font}>
     <Place>
       <img src={place.image} width={100} height={100} alt="place" />
       <h3><b>{place.name}</b></h3>
@@ -46,6 +55,7 @@ const MenuList: React.FC<MenuListProps> = ({ place, shoppingCart, onOrder }) => 
                   quantity: shoppingCart[item.id]?.quantity,
                 }}
                 onOrder={onOrder}
+                color={color}
               />
             ))}
         </div>
