@@ -92,11 +92,7 @@ export function updatePlace(id: number, data: {}, token: string) {
 }
 
 export function createPaymentIntent(data: {}, token: string) {
-  return request('/api/create_payment_intent/', {
-    data,
-    token,
-    method: 'POST',
-  });
+  return request('/api/create_payment_intent/', { data, token, method: 'POST' });
 }
 
 export function uploadImage(image: string) {
@@ -120,4 +116,11 @@ export function updateMenuItem(id: number, data: {}, token: string) {
 
 export function addCategory(data: {}, token: string) {
   return request('/api/categories/', { data, token, method: 'POST' });
+}
+export function fetchOrders(placeId: any, token: string) {
+  return request(`/api/orders/?place=${placeId}`, { token });
+}
+
+export function completeOrder(id: number, data: {}, token: string) {
+  return request(`/api/orders/${id}`, { data, token, method: 'PATCH' });
 }

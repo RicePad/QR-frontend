@@ -11,7 +11,7 @@ interface AuthContextInterface {
 const AuthContext = createContext<AuthContextInterface | null>(null);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
 
   const signIn = async (username: string, password: string, callback: () => void) => {
