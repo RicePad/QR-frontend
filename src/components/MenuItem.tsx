@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import PropType from 'prop-types';
 import { BiEdit } from 'react-icons/bi';
 
 const Container = styled.div`
@@ -25,9 +26,12 @@ interface MenuItemProps {
     item: any
     onEdit: any
     onOrder: any
+    color?: any
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit, onOrder }) => (
+const MenuItem: React.FC<MenuItemProps> = ({
+  item, onEdit, onOrder, color,
+}) => (
   <Container>
     <Col xs={5} style={{ backgroundImage: `url(${item.image})` }} />
     <Col xs={7} className="d-flex flex-column justify-content-between w-100">
@@ -50,7 +54,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit, onOrder }) => (
       <div className="d-flex justify-content-between align-items-end">
         <div>
           <h5 className="mb-0 text-standard">
-            <b>
+            <b style={{ color }}>
               $
               {item.price}
             </b>
@@ -72,5 +76,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onEdit, onOrder }) => (
     </Col>
   </Container>
 );
+MenuItem.propTypes = {
+  color: PropType.number.isRequired,
+};
 
 export default MenuItem;
